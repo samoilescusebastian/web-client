@@ -1,0 +1,55 @@
+**************************************
+**************************************
+        Sebastian Samoilescu
+            GRUPA 325CA
+            TEMA 3 PC
+**************************************
+**************************************
+
+
+Conexiune TCP
+==============
+
+--> Functiile de send/recv prin TCP au fost luat din laboratorul 10 si au fost putin modificate
+    pentru functionare cu string uri
+
+JSON
+=====
+
+--> Am ales sa folosesc libraria nlohmann
+
+--> Folosesc json pentru a construi payload ul din functiile de register, login, add_book
+
+--> Pentru get_books folosesc json pentru fiecare intrare de tip book, din raspunsul primit de la server
+    Construiesc un vector de jsons pentru a afisa ulterior informatiile despre carti
+
+--> Pentru get_book extrag, si construiesc un singur obiect de tip json(campuri precum: titlu, autor, etc)
+
+--> pentru a parsa un string in json folosesc parse(libraria nlohmann)
+    pentru a converti un json in string folosesc dump
+
+Functii client
+--------------
+
+1)register -> fara query params sau cookies
+2)login -> seteaza la iesire variabila login(daca logarea se face cu succes)
+                -> salveaza cookie ul primit
+3)enter_library -> extrage in caz de succes tokenul JWT
+4)get_books -> afiseaza informatiile dupa ce sunt extrase din raspuns(in format json)
+5)get_book -> afiseaza informatii despre o carte dupa ce sunt extrase din raspuns(format json)
+6)delete_book -> verifica ca id ul cartii sa fie valid
+7)add_book -> verifica ca datele sa fie in format corespunzator
+8)logout -> se sterge tokenul, cookies si se seteaza logout
+
+Alte observatii:
+
+--> am folosit un map pentru a usura interactiunea cu comenzile(construire switch)
+
+--> dupa fiecare comanda intregistrata, se redeschide conexiunea cu serverul
+
+--> la raspunsul de la server, se extrage codul HTTP pentru a returna un mesaj corespunzator(eroare/succes)
+    (se foloseste functia extractCode)
+
+--> daca nu se poate stabili conexiunea cu serverul, se inchide clientul
+
+--> cele 8 functii sunt folite impreuna cu GET, POST, DELETE;
